@@ -190,8 +190,15 @@ table.battleship {
     width: 100%;
     text-align: center;
     border-collapse: collapse;
+    color: #FFFFFF;
+}
+
+table.battleship.opponent {
+  background-image: url("radar.png");
+  background-size: cover;
 }
 
 tr.battleship td.battleship {
     border: 1px solid white;
+    width: calc(100% / 11);
 }
