@@ -5,22 +5,22 @@ body {
   width: 100vw;
 }
 
-.navbar {
-  height: 50px;
-  margin-bottom: 0;
+.inverse{
+  background-color: #222222;
+  color: #FFFFFF;
 }
 
-.page {
-  height: calc(100% - 50px);
-}
-
-.pageLoad{
+#container{
   height: 100%;
+  width: 100%;
+}
+
+.navbar {
+  margin-bottom: 0;
 }
 
 /* Toggle Styles */ 	
   #wrapper {
-      height: calc(100% - 50px);
       padding-right: 265px;
       -webkit-transition: all 0.5s ease;
       -moz-transition: all 0.5s ease;
@@ -47,12 +47,17 @@ body {
       transition: all 0.5s ease;
   }
   
+  #sidebar-content{
+    height: 100%;
+    padding: 15px;
+    color: #FFFFFF;
+  }
+  
   #wrapper.toggled #sidebar-wrapper {
       width: 0px;
   }
   
   #page-content-wrapper {
-      height: 100%;
       width: 100%;
       padding: 0;
       position: relative;
@@ -63,14 +68,83 @@ body {
       margin-right: 0;
   }
 
+  #chat-toggle {
+    padding: 15px;
+  }
+  
+  .glyphicon.glyphicon-comment {
+    font-size: 20px;
+    color: #BF1E2D;
+  }
+  
+  #sidebar-header{
+      padding: inherit;
+      height: 50px;
+  }
+   
+  #sidebar-main{
+       height: calc(100% - 100px);
+       overflow: scroll;
+  }
+   
+  #sidebar-footer{
+       height: 50px;
+       padding: inherit;
+  }
+   
+  #message_input {
+    width: 100%;
+    border-radius: 2px;
+  }
+  
 
 /* Home Page Styles */
-
 .gameOption {
-  height: 100%;
+  height: 400px;
 }
 
 .well.gameOption{
-  background-color: color;
+  border-radius: 15px;
   text-align: center;
 }
+
+a.gameOption {
+  text-decoration: none;
+}
+
+
+/* TicTac Page Styles */
+.well.tictac {
+  height: 500px;
+  width: 500px;
+  border-radius: 15px;
+}
+
+table.tictac {
+    border-collapse: collapse;
+    border-style: hidden;
+    height: 100%;
+}
+
+tr.tictac td.tictac {
+    border: 5px solid white;
+}
+
+
+/* COnnect4 Page Styles */
+.well.connect4 {
+  height: 500px;
+  width: 575px;
+  border-radius: 15px;
+}
+
+table.connect4 {
+    background-color: #FFFFFF; 
+    border: none;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+
+/* BlackJack Page Styles */
