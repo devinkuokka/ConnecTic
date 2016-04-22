@@ -38,6 +38,14 @@ myApp.controller('ticTacCtrl', function($scope) {
 });
 
 myApp.controller('connect4Ctrl', function($scope) {
+  $scope.range = function(min, max, step) {
+    step = step || 1;
+    var input = [];
+    for (var i = min; i <= max; i += step) {
+        input.push(i);
+    }
+    return input;
+  };
   
 });
 
@@ -49,7 +57,8 @@ myApp.controller('battleshipCtrl', function($scope) {
         input.push(i);
     }
     return input;
-};
+  };
   
+  $scope.xvalues = ["","A","B","C","D","E","F","G","H","I","J"];
   
 });

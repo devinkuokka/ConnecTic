@@ -190,8 +190,10 @@ table.battleship {
     width: 100%;
     text-align: center;
     border-collapse: collapse;
+    color: #FFFFFF;
 }
 
 tr.battleship td.battleship {
     border: 1px solid white;
+    width: calc(100% / 11);
 }
