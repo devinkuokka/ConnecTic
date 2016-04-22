@@ -35,6 +35,20 @@ body {
   height: 100%;
 }
 
+.modal-body {
+  padding-left: 25px;  
+}
+
+.form-group {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#loginModal {
+  top: 30%;
+}
+
+
 /* Toggle Styles */ 	
   #wrapper {
       height: calc(100% - 50px);
@@ -139,10 +153,34 @@ body {
   margin: 0 auto;
 }
 
+
+/* Leadersboard Page Styles */
+.leadersboard{
+ height: 100%;  
+}
+
+.well.leaders {
+  height: 100%;
+  border-radius: 15px;
+  text-align: center;
+}
+
+h2.leaders{
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+table.leaders {
+    height: calc(100% - 60px);
+    text-align: center;
+    margin-bottom: 0;
+}
+
 /* TicTac Page Styles */
 .well.tictac {
   height: 100%;
-  width: 500px;
+  width: 550px;
   border-radius: 15px;
 }
 
@@ -191,11 +229,6 @@ table.battleship {
     text-align: center;
     border-collapse: collapse;
     color: #FFFFFF;
-}
-
-table.battleship.opponent {
-  background-image: url("radar.png");
-  background-size: cover;
 }
 
 tr.battleship td.battleship {

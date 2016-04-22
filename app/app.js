@@ -11,17 +11,21 @@ myApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'home.html',
       controller: 'homeCtrl'
     }).
-    when('/home/tictac', {
+    when('/tictac', {
       templateUrl: 'ticTac.html',
       controller: 'ticTacCtrl'
     }).
-    when('/home/connect4', {
+    when('/connect4', {
       templateUrl: 'connect4.html',
       controller: 'connect4Ctrl'
     }).
-    when('/home/battleship', {
+    when('/battleship', {
       templateUrl: 'battleship.html',
       controller: 'battleshipCtrl'
+    }).
+    when('/leadersboard', {
+      templateUrl: 'leadersboard.html',
+      controller: 'leadersboardCtrl'
     }).
     otherwise({
       redirectTo: '/home'
@@ -60,5 +64,9 @@ myApp.controller('battleshipCtrl', function($scope) {
   };
   
   $scope.xvalues = ["","A","B","C","D","E","F","G","H","I","J"];
+  
+});
+
+myApp.controller('leadersboardCtrl', function($scope) {
   
 });
