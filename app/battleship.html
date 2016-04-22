@@ -1,15 +1,25 @@
-<div class="page">
+<div class="pageLoad">
 	
 	<div class="well battleship inverse">
-		<table class="battleship">
+		<div class="battleship board col-xs-6">
+			<table class="battleship player">
 			
-			<tr class="battleship" ng-repeat="i in range(1,10)">
-				<td class="battleship" ng-repeat="i in range(1,10)">{{}}</td>
-				<td class="battleship no-border">{{}}</td>
-				<td class="battleship" ng-repeat="i in range(1,10)">{{}}</td>
-			</tr>
-
-		</table>
+				<tr class="battleship" ng-repeat="i in range(1,10)">
+					<td class="battleship border" ng-repeat="i in range(1,10)">{{}}</td>
+				</tr>
+	
+			</table>
+		</div>
+		
+		<div class="battleship board col-xs-6">
+			<table class="battleship opponent">
+				
+				<tr class="battleship" ng-repeat="i in range(1,10)">
+					<td class="battleship border" ng-repeat="i in range(1,10)">{{}}</td>
+				</tr>
+	
+			</table>
+		</div>
 	</div>
 	
 </div>
