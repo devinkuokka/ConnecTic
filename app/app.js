@@ -19,9 +19,9 @@ myApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'connect4.html',
       controller: 'connect4Ctrl'
     }).
-    when('/home/blackjack', {
-      templateUrl: 'blackjack.html',
-      controller: 'blackjackCtrl'
+    when('/home/battleship', {
+      templateUrl: 'battleship.html',
+      controller: 'battleshipCtrl'
     }).
     otherwise({
       redirectTo: '/home'
@@ -41,6 +41,15 @@ myApp.controller('connect4Ctrl', function($scope) {
   
 });
 
-myApp.controller('blackjackCtrl', function($scope) {
+myApp.controller('battleshipCtrl', function($scope) {
+  $scope.range = function(min, max, step) {
+    step = step || 1;
+    var input = [];
+    for (var i = min; i <= max; i += step) {
+        input.push(i);
+    }
+    return input;
+};
+  
   
 });

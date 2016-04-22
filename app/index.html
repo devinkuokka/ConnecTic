@@ -23,18 +23,18 @@
   <body>
     <div id="container">
     <!-- Nav Header -->
-    <nav class="navbar navbar-default navbar-inverse">
-      <div class="container-fluid">
+    <nav class="navbar navbar-default navbar-inverse nav">
+      <div class="nav container-fluid">
         <!-- Collect the nav links, forms, and other content for toggling -->
           <ul class="nav navbar-nav">
-            <li>
-              <a href="#/home">
+            <li class="nav">
+              <a href="#/home" style="padding-top: 12px; padding-bottom: 13px;">
                 <img src="https://cdn3.iconfinder.com/data/icons/brain-games/1042/Tic-Tac-Toe-Game-red.png" height="25px;" width="25px;">
               </a>
             </li>
             
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
+            <li class="nav"><a href="#">Link</a></li>
+            <li class="nav"><a href="#">Link</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -98,6 +98,10 @@
 <script>
   $(document).ready(function() {	
     //$("#chat-toggle").hide();
+    //
+    //$(".gameOption").click(function(e) {
+    //  $("#chat-toggle").show();
+    //});
     
     $("#sidebar-toggle").click(function(e) {
       e.preventDefault();

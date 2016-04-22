@@ -15,12 +15,20 @@ body {
   width: 100%;
 }
 
-.navbar {
+.nav {
+  height: 50px;
   margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0; 
+}
+
+#page-content-wrapper {
+  height: 100%
 }
 
 /* Toggle Styles */ 	
   #wrapper {
+      height: calc(100% - 50px);
       padding-right: 265px;
       -webkit-transition: all 0.5s ease;
       -moz-transition: all 0.5s ease;
@@ -33,6 +41,7 @@ body {
   }
   
   #sidebar-wrapper {
+      height: calc(100% - 50px);
       z-index: 1000;
       position: fixed;
       right: 250px;
@@ -100,7 +109,7 @@ body {
 
 /* Home Page Styles */
 .gameOption {
-  height: 400px;
+  height: 100%;
 }
 
 .well.gameOption{
@@ -121,9 +130,10 @@ a.gameOption {
 }
 
 table.tictac {
+    height: 100%;
+    text-align: center;
     border-collapse: collapse;
     border-style: hidden;
-    height: 100%;
 }
 
 tr.tictac td.tictac {
@@ -131,7 +141,7 @@ tr.tictac td.tictac {
 }
 
 
-/* COnnect4 Page Styles */
+/* Connect4 Page Styles */
 .well.connect4 {
   height: 500px;
   width: 575px;
@@ -147,4 +157,26 @@ table.connect4 {
 }
 
 
-/* BlackJack Page Styles */
+/* Battleship Page Styles */
+.well.battleship {
+  height: 500px;
+  width: 100%;
+  border-radius: 15px;
+}
+
+table.battleship {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+tr.battleship td.battleship {
+    border: 1px solid white;
+}
+
+td.no-border {
+  border-top: none;
+  border-bottom: none;
+}
+
