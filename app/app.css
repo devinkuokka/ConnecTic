@@ -3,6 +3,7 @@
 body {
   height: 100vh;
   width: 100vw;
+  overflow-y: hidden;
 }
 
 .inverse{
@@ -140,7 +141,7 @@ body {
 
 /* TicTac Page Styles */
 .well.tictac {
-  height: 500px;
+  height: 100%;
   width: 500px;
   border-radius: 15px;
 }
@@ -159,7 +160,7 @@ tr.tictac td.tictac {
 
 /* Connect4 Page Styles */
 .well.connect4 {
-  height: 500px;
+  height: 100%;
   width: 575px;
   border-radius: 15px;
 }
@@ -175,9 +176,13 @@ table.connect4 {
 
 /* Battleship Page Styles */
 .well.battleship {
-  height: 500px;
+  height: 100%;
   width: 100%;
   border-radius: 15px;
+}
+
+.battleship.board {
+  height: 100%;
 }
 
 table.battleship {
@@ -190,9 +195,3 @@ table.battleship {
 tr.battleship td.battleship {
     border: 1px solid white;
 }
-
-td.no-border {
-  border-top: none;
-  border-bottom: none;
-}
-
