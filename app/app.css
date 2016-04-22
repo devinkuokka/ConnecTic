@@ -26,6 +26,14 @@ body {
   height: 100%
 }
 
+.page {
+  height: calc(100% - 100px);
+}
+
+.pageLoad {
+  height: 100%;
+}
+
 /* Toggle Styles */ 	
   #wrapper {
       height: calc(100% - 50px);
@@ -79,6 +87,7 @@ body {
 
   #chat-toggle {
     padding: 15px;
+    height: 50px;
   }
   
   .glyphicon.glyphicon-comment {
@@ -114,13 +123,20 @@ body {
 
 .well.gameOption{
   border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
 }
 
-a.gameOption {
+.gameOption > a{
   text-decoration: none;
 }
 
+.gameOption > img {
+  display: block;
+  margin: 0 auto;
+}
 
 /* TicTac Page Styles */
 .well.tictac {
