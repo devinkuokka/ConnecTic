@@ -23,9 +23,13 @@
 			
 			<div ng-show="showJoin">
 				<table class="table joinRooms">
-					<tr class="joinRooms" ng-repeat="room in rooms | filter:gameId">
+
+					<tr class="joinRooms" ng-repeat="room in filteredRooms = (rooms | filter:gameId)">
 						<td class="joinRooms"><a href="#/{{gameId}}/:{{room.id}}">{{room.name}}</a></td>
 						<td class="joinRooms"><i>against {{room.creator}}</i></td>
+					</tr>
+					<tr ng-hide="filteredRooms.length">
+						<td>No Open Rooms!</td>
 					</tr>
 				</table>    			
 			</div>
