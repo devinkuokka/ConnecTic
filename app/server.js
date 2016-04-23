@@ -1,5 +1,9 @@
-var express = require('express');
-var app = express();
+var express = require('express'),
+	app = express(),
+	http = require("http"),
+	socketio = require("socket.io"),
+	fs = require("fs"),
+	uuid = require("uuid");
 
 app.use(express.static(__dirname + '/app'));
 
