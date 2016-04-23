@@ -19,8 +19,17 @@
     
     <link rel="stylesheet" href="app.css">
   
+      <script src="/socket.io/socket.io.js"></script>
+        <script>
+          var socket = io.connect('http://localhost');
+          socket.on('news', function (data) {
+            console.log(data);
+            socket.emit('my other event', { my: 'data' });
+          });
+        </script>
   </head>
   <body>
+
     <div id="container">
     <!-- Nav Header -->
     <nav class="navbar navbar-default navbar-inverse nav">
