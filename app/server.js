@@ -1,13 +1,13 @@
 var express = require('express');
-var server = require("http").Server(app);
 var app = express();
+var server = require("http").Server(app);
 var socketio = require('socket.io');
-var io = socketio.listen(server);
+var io = socketio.listen(app.listen(8000));
 var uuid = require("uuid");
 
 
 
-app.listen(8000);
+//app.listen(8000);
 console.log('Server running at port 8000');
 
 app.use(express.static(__dirname + '/app'));
