@@ -8,23 +8,23 @@ var myApp = angular.module('myApp', [
 myApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
     when('/home', {
-      templateUrl: 'home.html',
+      templateUrl: 'views/home.html',
       controller: 'homeCtrl'
     }).
     when('/tictac', {
-      templateUrl: 'ticTac.html',
+      templateUrl: 'views/ticTac.html',
       controller: 'ticTacCtrl'
     }).
     when('/connect4', {
-      templateUrl: 'connect4.html',
+      templateUrl: 'views/connect4.html',
       controller: 'connect4Ctrl'
     }).
     when('/battleship', {
-      templateUrl: 'battleship.html',
+      templateUrl: 'views/battleship.html',
       controller: 'battleshipCtrl'
     }).
     when('/leadersboard', {
-      templateUrl: 'leadersboard.html',
+      templateUrl: 'views/leadersboard.html',
       controller: 'leadersboardCtrl'
     }).
     otherwise({
