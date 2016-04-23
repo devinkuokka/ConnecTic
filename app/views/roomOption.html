@@ -7,9 +7,9 @@
 			
 			<div ng-show="showNew" class="showNew">
 				<div class="col-sm-12 form-inline">
-					<input type="text" class="form-control" placeholder="Enter room name" required autofocus ng-model="newRoomName">
+					<input type="text" class="form-control" placeholder="Enter room name" required autofocus ng-model="roomname">
 					
-					<button class="btn btn-default" ng-click="createRoom()">Create</button>
+					<button class="btn btn-default" ng-click="newRoom(roomname)">Create</button>
 				</div>
 			</div>
 			
@@ -28,7 +28,7 @@
 						<td class="joinRooms"><a href="#/{{gameId}}/:{{room.id}}">{{room.name}}</a></td>
 						<td class="joinRooms"><i>against {{room.creator}}</i></td>
 					</tr>
-					<tr ng-hide="filteredRooms.length">
+					<tr class="joinRooms red"ng-hide="filteredRooms.length">
 						<td>No Open Rooms!</td>
 					</tr>
 				</table>    			

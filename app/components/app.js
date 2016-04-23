@@ -7,13 +7,21 @@ var myApp = angular.module('myApp', [
 
 myApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
+    when('/login', {
+      templateUrl: 'views/login.html',
+      controller: 'homeCtrl'
+    }).
     when('/home', {
       templateUrl: 'views/home.html',
       controller: 'homeCtrl'
     }).
+    when('/leadersboard', {
+      templateUrl: 'views/leadersboard.html',
+      controller: 'homeCtrl'
+    }).
     when('/roomOption/:gameId', {
       templateUrl: 'views/roomOption.html',
-      controller: 'roomOptionCtrl'
+      controller: 'homeCtrl'
     }).
     when('/tictac/:roomId', {
       templateUrl: 'views/ticTac.html',
@@ -27,17 +35,29 @@ myApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'views/battleship.html',
       controller: 'battleshipCtrl'
     }).
-    when('/leadersboard', {
-      templateUrl: 'views/leadersboard.html',
-      controller: 'leadersboardCtrl'
-    }).
     otherwise({
-      redirectTo: '/home'
+      redirectTo: '/login'
     });
   
 }]);
 
-myApp.controller('homeCtrl', function($scope) {  
+myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
+
+  var socket = io.connect();
+  var playerName;
+  var playerId;
+  
+  $scope.newPlayer = function(username) {
+    socket.emit("new_player_to_server", username);
+    playerName = username;
+    window.location = "#/home";
+  };
+  
+  socket.on("new_player_to_client", function(data){
+    playerId = data;
+  });
+  
+  
   $scope.games = [
     {'id': 'tictac',
       'name': 'Tic-Tac-Toe',
@@ -52,12 +72,28 @@ myApp.controller('homeCtrl', function($scope) {
       'img': 'battleship.png'
     }
   ];
-
   
-});
-
-myApp.controller('roomOptionCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
   $scope.gameId = $routeParams.gameId;
+  
+  $scope.newRoom = function(roomname) {
+    console.log($scope.playerId);
+    socket.emit("new_room_to_server", {name:roomname, gameId: $scope.gameId, player1:$scope.playerId});
+    console.log({name:roomname, gameId: $scope.gameId, player1:playerId});
+
+  };
+  
+  
+  
+  $scope.range = function(min, max, step) {
+    step = step || 1;
+    var input = [];
+    for (var i = min; i <= max; i += step) {
+        input.push(i);
+    }
+    return input;
+  };
+  
+  $scope.xvalues = ["","A","B","C","D","E","F","G","H","I","J"];
   
   $scope.rooms = [
     {'id': '1',
@@ -77,10 +113,10 @@ myApp.controller('roomOptionCtrl', ['$scope', '$routeParams', function($scope, $
     }
   ];
   
-  $scope.createRoom = function(){
-    
+  $scope.createRoom = function(){ 
     
   };
+  
   
 }]);
 
@@ -122,7 +158,3 @@ myApp.controller('battleshipCtrl', ['$scope', '$routeParams', function($scope, $
   
 }]);
 
-
-myApp.controller('leadersboardCtrl', function($scope) {
-  
-});

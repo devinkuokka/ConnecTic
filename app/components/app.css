@@ -227,7 +227,10 @@
   .joinRooms > a:hover {
     color: #FFFFFF;
   }
-
+  
+  .joinRooms.red {
+    color: #BF1E2D;
+  }
 
 
 /* Leadersboard Page Styles */

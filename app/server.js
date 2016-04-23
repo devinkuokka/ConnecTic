@@ -51,14 +51,31 @@ var rooms = [];
 io.on('connection', function (socket) {
 	console.log("connected");
 	socket.on("new_player_to_server", function(data){
+		var playerId = socket.id;
 		players.push(
 			{
-				'id': socket.id,
+				'id': playerId,
 				'name': data,
 				'gameId': null,
 				'roomId': null
 			}
 		);
+		socket.emit("new_player_to_client", playerId);
 		console.log(players);
+		
+	});
+	
+	socket.on("new_room_to_server", function(data){
+		rooms.push(
+			{
+				'id': uuid.v4(),
+				'name': data.name,
+				'gameId': data.gameId,
+				'board': null,
+				'player1': data.player1,
+				'player2': null
+			}
+		);
+		console.log(rooms);
 	});
 });

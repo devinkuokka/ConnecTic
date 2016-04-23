@@ -20,13 +20,6 @@
     <link rel="stylesheet" href="components/app.css">
   
     <script src="socket.io/socket.io.js"></script>
-    <script>
-      var socket = io();
-      socket.on('news', function (data) {
-        console.log(data);
-        socket.emit('my other event', { my: 'data' });
-      });
-    </script>
     
   </head>
   <body>
@@ -103,42 +96,10 @@
     
   
   </body>
-  
-  <!-- loginModal -->
-  <div id="loginModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <!-- modal content-->
-      <div class="modal-content">
-        <div class="modal-body">
-          <form id = "loginForm" class="form-horizontal" role="form">
-            <div class="form-group">
-               
-              <div class="col-xs-9">
-                  <input id="user" type="text" class="form-control" placeholder="Enter username" autocomplete="off" required>
-              </div>
-              
-              <div class="col-xs-3 login">
-                  <button id="loginSubmit" type="submit" class="btn btn-default" data-dismiss="modal">Start Playing</button>
-              </div>
-              
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- /loginModal -->
 
 </html>
 
 <script>
-  //$(window).load(function(){
-  //  $('#loginModal').modal({
-  //    backdrop: 'static',
-  //    keyboard: false
-  //  });
-  //  $('#loginModal').modal('show');
-  //});
   
   
   $(document).ready(function() {	
