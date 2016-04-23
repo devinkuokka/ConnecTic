@@ -11,15 +11,19 @@ myApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'views/home.html',
       controller: 'homeCtrl'
     }).
-    when('/tictac', {
+    when('/roomOption/:gameId', {
+      templateUrl: 'views/roomOption.html',
+      controller: 'roomOptionCtrl'
+    }).
+    when('/tictac/:roomId', {
       templateUrl: 'views/ticTac.html',
       controller: 'ticTacCtrl'
     }).
-    when('/connect4', {
+    when('/connect4/:roomId', {
       templateUrl: 'views/connect4.html',
       controller: 'connect4Ctrl'
     }).
-    when('/battleship', {
+    when('/battleship/:roomId', {
       templateUrl: 'views/battleship.html',
       controller: 'battleshipCtrl'
     }).
@@ -33,15 +37,63 @@ myApp.config(['$routeProvider', function($routeProvider) {
   
 }]);
 
-myApp.controller('homeCtrl', function($scope) {
+myApp.controller('homeCtrl', function($scope) {  
+  $scope.games = [
+    {'id': 'tictac',
+      'name': 'Tic-Tac-Toe',
+      'img': 'tictac.png'
+    },
+    {'id': 'connect4',
+      'name': 'Connect 4',
+      'img': 'connect4.png'
+    },
+    {'id': 'battleship',
+      'name': 'Battleship',
+      'img': 'battleship.png'
+    }
+  ];
+
   
 });
 
-myApp.controller('ticTacCtrl', function($scope) {
+myApp.controller('roomOptionCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
+  $scope.gameId = $routeParams.gameId;
   
-});
+  $scope.rooms = [
+    {'id': '1',
+      'name': 'Room1',
+      'creator': 'user1',
+      'gameId': 'tictac'
+    },
+    {'id': '2',
+      'name': 'Roooooooooooooooooom2',
+      'creator': 'user2',
+      'gameId': 'tictac'
+    },
+    {'id': '3',
+      'name': 'Room3',
+      'creator': 'user3',
+      'gameId': 'connect4'
+    }
+  ];
+  
+  $scope.createRoom = function(){
+    
+    
+  };
+  
+}]);
 
-myApp.controller('connect4Ctrl', function($scope) {
+
+myApp.controller('ticTacCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
+  $scope.roomId = $routeParams.roomId;
+
+}]);
+
+
+myApp.controller('connect4Ctrl', ['$scope', '$routeParams', function($scope, $routeParams) {
+  $scope.roomId = $routeParams.roomId;
+  
   $scope.range = function(min, max, step) {
     step = step || 1;
     var input = [];
@@ -51,9 +103,12 @@ myApp.controller('connect4Ctrl', function($scope) {
     return input;
   };
   
-});
+}]);
 
-myApp.controller('battleshipCtrl', function($scope) {
+
+myApp.controller('battleshipCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
+  $scope.roomId = $routeParams.roomId;
+  
   $scope.range = function(min, max, step) {
     step = step || 1;
     var input = [];
@@ -65,7 +120,8 @@ myApp.controller('battleshipCtrl', function($scope) {
   
   $scope.xvalues = ["","A","B","C","D","E","F","G","H","I","J"];
   
-});
+}]);
+
 
 myApp.controller('leadersboardCtrl', function($scope) {
   

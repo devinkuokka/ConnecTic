@@ -1,0 +1,36 @@
+<div class="pageLoad">
+	
+	<div class="col-xs-6 roomOption col">
+		<div class="roomOption well inverse" ng-click="showNew=true; showJoin=false">
+			
+			<h2 class="roomOption">Start New Game</h2>
+			
+			<div ng-show="showNew" class="showNew">
+				<div class="col-sm-12 form-inline">
+					<input type="text" class="form-control" placeholder="Enter room name" required autofocus ng-model="newRoomName">
+					
+					<button class="btn btn-default" ng-click="createRoom()">Create</button>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div class="col-xs-6 roomOption col">
+		<div class="roomOption well inverse" ng-click="showJoin=true; showNew=false">
+			
+			<h2 class="roomOption">Join Current Game</h2>
+			
+			<div ng-show="showJoin">
+				<table class="table joinRooms">
+					<tr class="joinRooms" ng-repeat="room in rooms | filter:gameId">
+						<td class="joinRooms"><a href="#/{{gameId}}/:{{room.id}}">{{room.name}}</a></td>
+						<td class="joinRooms"><i>against {{room.creator}}</i></td>
+					</tr>
+				</table>    			
+			</div>
+			
+		</div>	
+	</div>
+	
+</div> <!--/pageLoad-->

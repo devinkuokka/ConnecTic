@@ -1,57 +1,63 @@
 /* app css stylesheet */
 
-body {
-  height: 100vh;
-  width: 100vw;
-  overflow-y: hidden;
-}
+  .inverse{
+    background-color: #222222;
+    color: #FFFFFF;
+  }
 
-.inverse{
-  background-color: #222222;
-  color: #FFFFFF;
-}
 
-#container{
-  height: 100%;
-  width: 100%;
-}
 
-.nav {
-  height: 50px;
-  margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0; 
-}
+/* Index Page Styles */
+  body {
+    height: 100vh;
+    width: 100vw;
+    overflow-y: hidden;
+  }
+  
+  #container{
+    height: 100%;
+    width: 100%;
+  }
+  
+  .nav {
+    height: 50px;
+    margin-bottom: 15px;
+    padding-top: 0;
+    padding-bottom: 0; 
+  }
+  
+  #page-content-wrapper {
+    height: 100%
+  }
+  
+  .page {
+    height: 100%;
+    /*height: calc(100% - 40px);*/
+  }
+  
+  .pageLoad {
+    height: 100%;
+    padding-bottom: 20px;
+  }
+  
+  .modal-body {
+    padding-left: 25px;  
+  }
+  
+  .form-group {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  #loginModal {
+    top: 30%;
+  }
 
-#page-content-wrapper {
-  height: 100%
-}
-
-.page {
-  height: calc(100% - 100px);
-}
-
-.pageLoad {
-  height: 100%;
-}
-
-.modal-body {
-  padding-left: 25px;  
-}
-
-.form-group {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-#loginModal {
-  top: 30%;
-}
 
 
 /* Toggle Styles */ 	
   #wrapper {
-      height: calc(100% - 50px);
+      height: calc(100% - 65px);
       padding-right: 265px;
       -webkit-transition: all 0.5s ease;
       -moz-transition: all 0.5s ease;
@@ -64,12 +70,12 @@ body {
   }
   
   #sidebar-wrapper {
-      height: calc(100% - 50px);
+      height: calc(100% - 65px);
       z-index: 1000;
       position: fixed;
+      top: 50px;
       right: 250px;
       width: 250px;
-      height: calc(100% - 50px);;
       margin-right: -250px;
       overflow-y: auto;
       background: #000;
@@ -101,8 +107,9 @@ body {
   }
 
   #chat-toggle {
-    padding: 15px;
-    height: 50px;
+    padding-right: 15px;
+    height: 25px;
+    margin-bottom: 20px;
   }
   
   .glyphicon.glyphicon-comment {
@@ -131,107 +138,179 @@ body {
   }
   
 
+
 /* Home Page Styles */
-.gameOption {
-  height: 100%;
-}
+  .gameOption {
+    height: 100%;
+  }
+  
+  .well.gameOption{
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .gameOption > a{
+    text-decoration: none;
+  }
+  
+  .imgContainer{
+    width: 100%;
+  }
+  
+  .gameOption > img {
+    display: block;
+    margin: 0 auto;
+  }
 
-.well.gameOption{
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
 
-.gameOption > a{
-  text-decoration: none;
-}
 
-.gameOption > img {
-  display: block;
-  margin: 0 auto;
-}
+/* Room Option Page Styles */
+  .roomOption.col {
+    height: calc(100% - 50px);  
+  }
+  
+  .roomOption {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .well.roomOption {
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  h2.roomOption {
+    height: 70px;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .roomOption > a{
+    text-decoration: none;
+  }
+
+  .showNew {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  table.joinRooms {
+    height: calc(100% - 70px);
+    width: calc(100% - 40px);
+    text-align: center;
+    margin-bottom: 0;
+    color: #999999;
+    margin: 20px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    table-layout: fixed;
+    width: calc(100% - 40px);
+  }
+  
+  td.joinRooms {
+    width: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .joinRooms > a {
+    color: #999999;
+    text-decoration: none;
+  }
+  
+  .joinRooms > a:hover {
+    color: #FFFFFF;
+  }
+
 
 
 /* Leadersboard Page Styles */
-.leadersboard{
- height: 100%;  
-}
-
-.well.leaders {
-  height: 100%;
-  border-radius: 15px;
-  text-align: center;
-}
-
-h2.leaders{
-  height: 50px;
-  margin-top: 10px;
-  margin-bottom: 0;
-}
-
-table.leaders {
+  .leadersboard {
+    height: 100%;  
+  }
+  
+  .well.leaders {
+    height: 100%;
+    border-radius: 15px;
+    text-align: center;
+  }
+  
+  h2.leaders{
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+  
+  table.leaders {
     height: calc(100% - 60px);
     text-align: center;
     margin-bottom: 0;
-}
+  }
 
+
+  
 /* TicTac Page Styles */
-.well.tictac {
-  height: 100%;
-  width: 550px;
-  border-radius: 15px;
-}
-
-table.tictac {
+  .well.tictac {
+    height: 100%;
+    width: 550px;
+    border-radius: 15px;
+  }
+  
+  table.tictac {
     height: 100%;
     text-align: center;
     border-collapse: collapse;
     border-style: hidden;
-}
-
-tr.tictac td.tictac {
-    border: 5px solid white;
-}
-
-
+  }
+  
+  tr.tictac td.tictac {
+      border: 5px solid white;
+  }
+  
+  
+  
 /* Connect4 Page Styles */
-.well.connect4 {
-  height: 100%;
-  width: 575px;
-  border-radius: 15px;
-}
-
-table.connect4 {
+  .well.connect4 {
+    height: 100%;
+    width: 650px;
+    border-radius: 15px;
+  }
+  
+  table.connect4 {
     background-color: #FFFFFF; 
     border: none;
     height: 100%;
     width: 100%;
     text-align: center;
-}
-
+  }
+  
 
 /* Battleship Page Styles */
-.well.battleship {
-  height: 100%;
-  width: 100%;
-  border-radius: 15px;
-}
-
-.battleship.board {
-  height: 100%;
-}
-
-table.battleship {
+  .well.battleship {
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+  }
+  
+  .battleship.board {
+    height: 100%;
+  }
+  
+  table.battleship {
     height: 100%;
     width: 100%;
     text-align: center;
     border-collapse: collapse;
     color: #FFFFFF;
-}
-
-tr.battleship td.battleship {
+  }
+  
+  tr.battleship td.battleship {
     border: 1px solid white;
     width: calc(100% / 11);
-}
+  }

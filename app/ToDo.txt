@@ -1,0 +1,4 @@
+TO DO:
+
+- fix ng-click for create room button in roomOption.html
+- ng-show showChat when enter a room
