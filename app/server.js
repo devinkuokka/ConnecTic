@@ -25,10 +25,40 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/index.html')
 });
 
+// Players = [
+//	{	id:
+//		name:
+//		score:
+//		gameId:
+//		roomId:
+//	},
+//];
+
+// Rooms = [
+//	{	id:
+//		name:
+//		gameId:
+//		board:
+//		player1:
+//		player2:
+//	},
+//];
+
+var players = [];
+var rooms = [];
+
+
 io.on('connection', function (socket) {
 	console.log("connected");
-	socket.emit('news', { hello: 'world' });
-	socket.on('my other event', function (data) {
-    console.log("connected");
-  });
+	socket.on("new_player_to_server", function(data){
+		players.push(
+			{
+				'id': socket.id,
+				'name': data,
+				'gameId': null,
+				'roomId': null
+			}
+		);
+		console.log(players);
+	});
 });
