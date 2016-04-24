@@ -49,33 +49,45 @@ var rooms = [];
 
 
 io.on('connection', function (socket) {
-	console.log("connected");
 	socket.on("new_player_to_server", function(data){
 		var playerId = socket.id;
+		var playerName = data;
 		players.push(
 			{
 				'id': playerId,
-				'name': data,
-				'gameId': null,
-				'roomId': null
+				'name': playerName,
+				'score': 0
 			}
 		);
-		socket.emit("new_player_to_client", playerId);
-		console.log(players);
-		
+		socket.emit("new_player_to_client", {playerId:playerId, playerName:playerName});
 	});
 	
-	socket.on("new_room_to_server", function(data){
+	socket.on("new_room_to_server", function(data) {
+		var gameId = data.gameId;
+		var roomId = uuid.v4();
 		rooms.push(
 			{
-				'id': uuid.v4(),
+				'id': roomId,
 				'name': data.name,
-				'gameId': data.gameId,
+				'gameId': gameId,
 				'board': null,
-				'player1': data.player1,
-				'player2': null
+				'p1Id': data.p1Id,
+				'p1Name': data.p1Name,
+				'p2Id': null,
+				'p2name': null
 			}
 		);
-		console.log(rooms);
+		socket.emit("new_room_to_client", {roomId:roomId, gameId:gameId});
+		socket.emit("request_rooms_to_client", rooms);
+		socket.join(roomId);
 	});
+	
+	socket.on("request_rooms_to_server", function() {
+		socket.emit("request_rooms_to_client", rooms);
+	});
+	
+	
+	
+	
+	
 });

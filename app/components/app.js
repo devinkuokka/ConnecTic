@@ -1,7 +1,10 @@
 'use strict';
 
   var playerName = "";
-  var playerId = 1;
+  var playerId = "";
+  var gameId = "";
+  var roomId = "";
+  var roomArray = [];
 
 // Declare app level module which depends on views, and components
 var myApp = angular.module('myApp', [
@@ -54,9 +57,9 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
     window.location = "#/home";
   };
   
-  socket.on("new_player_to_client", function(data){
-    playerId = data;
-    console.log(playerId);
+  socket.on("new_player_to_client", function(data) {
+    playerId = data.playerId;
+    playerName = data.playerName;
   });
   
   $scope.games = [
@@ -77,13 +80,29 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   $scope.gameId = $routeParams.gameId;
   
   $scope.newRoom = function(roomname) {
-    console.log(playerId);
-    socket.emit("new_room_to_server", {name:roomname, gameId: $scope.gameId, player1:playerId});
-    console.log({name:roomname, gameId: $scope.gameId, player1:playerId});
-
+    socket.emit("new_room_to_server", {name:roomname, gameId: $scope.gameId, p1Id:playerId, p1Name:playerName});
+  };
+  
+  socket.on("new_room_to_client", function(data) {
+    gameId = data.gameId
+    roomId = data.roomId;
+    window.location = "#/" + gameId + "/:" + roomId;
+  });
+  
+  $scope.requestRooms = function() {
+    socket.emit("request_rooms_to_server");
   };
   
   
+  socket.on("request_rooms_to_client", function(data) {
+    console.log("here");
+    roomArray = data;
+    console.log("here2");
+    console.log(roomArray);
+   
+  });
+  
+  $scope.rooms = roomArray;
   
   $scope.range = function(min, max, step) {
     step = step || 1;
@@ -96,28 +115,9 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   
   $scope.xvalues = ["","A","B","C","D","E","F","G","H","I","J"];
   
-  $scope.rooms = [
-    {'id': '1',
-      'name': 'Room1',
-      'creator': 'user1',
-      'gameId': 'tictac'
-    },
-    {'id': '2',
-      'name': 'Roooooooooooooooooom2',
-      'creator': 'user2',
-      'gameId': 'tictac'
-    },
-    {'id': '3',
-      'name': 'Room3',
-      'creator': 'user3',
-      'gameId': 'connect4'
-    }
-  ];
-  
-  $scope.createRoom = function(){ 
-    
+  $scope.joinRoom = function(data) {
+	socket.emit("join_room_to_server", {playerId:playerId, roomId:data});	
   };
-  
   
 }]);
 
