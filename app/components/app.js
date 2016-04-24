@@ -1,5 +1,8 @@
 'use strict';
 
+  var playerName = "";
+  var playerId = 1;
+
 // Declare app level module which depends on views, and components
 var myApp = angular.module('myApp', [
   'ngRoute'
@@ -44,9 +47,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
 
   var socket = io.connect();
-  var playerName;
-  var playerId;
-  
+
   $scope.newPlayer = function(username) {
     socket.emit("new_player_to_server", username);
     playerName = username;
@@ -55,8 +56,8 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   
   socket.on("new_player_to_client", function(data){
     playerId = data;
+    console.log(playerId);
   });
-  
   
   $scope.games = [
     {'id': 'tictac',
@@ -76,8 +77,8 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   $scope.gameId = $routeParams.gameId;
   
   $scope.newRoom = function(roomname) {
-    console.log($scope.playerId);
-    socket.emit("new_room_to_server", {name:roomname, gameId: $scope.gameId, player1:$scope.playerId});
+    console.log(playerId);
+    socket.emit("new_room_to_server", {name:roomname, gameId: $scope.gameId, player1:playerId});
     console.log({name:roomname, gameId: $scope.gameId, player1:playerId});
 
   };
