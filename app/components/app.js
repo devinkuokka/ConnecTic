@@ -95,11 +95,7 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   
   
   socket.on("request_rooms_to_client", function(data) {
-    console.log("here");
     roomArray = data;
-    console.log("here2");
-    console.log(roomArray);
-   
   });
   
   $scope.rooms = roomArray;
@@ -116,7 +112,7 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   $scope.xvalues = ["","A","B","C","D","E","F","G","H","I","J"];
   
   $scope.joinRoom = function(data) {
-	socket.emit("join_room_to_server", {playerId:playerId, roomId:data});	
+    socket.emit("join_room_to_server", {playerId:playerId, playerName:playerName, roomId:data});	
   };
   
 }]);
@@ -124,7 +120,9 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
 
 myApp.controller('ticTacCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
   $scope.roomId = $routeParams.roomId;
+  
 
+  
 }]);
 
 

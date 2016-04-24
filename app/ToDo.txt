@@ -1,4 +1,6 @@
 TO DO:
 
-- fix ng-click for create room button in roomOption.html
+- fix roomlist so that updated on everyone
 - ng-show showChat when enter a room
+- if refresh page direct to login
+- fix login so can't pass without entering

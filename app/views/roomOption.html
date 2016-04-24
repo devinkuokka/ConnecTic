@@ -17,7 +17,7 @@
 	</div>
 	
 	<div class="col-xs-6 roomOption col">
-		<div class="roomOption well inverse" ng-click="showJoin=true; showNew=false;">
+		<div class="roomOption well inverse" ng-click="requestRooms(); showJoin=true; showNew=false;">
 			
 			<h2 class="roomOption">Join Current Game</h2>
 			
@@ -25,7 +25,7 @@
 				<table class="table joinRooms">
 
 					<tr class="joinRooms" ng-repeat="room in filteredRooms = (rooms | filter:gameId)">
-						<td class="joinRooms"><a href="#/{{gameId}}/:{{room.id}}" ng-click="joinRoom({{room.id}});">{{room.name}}</a></td>
+						<td class="joinRooms"><a href="#/{{gameId}}/:{{room.id}}" ng-click="joinRoom(room.id);">{{room.name}}</a></td>
 						<td class="joinRooms"><i>against {{room.p1Name}}</i></td>
 					</tr>
 					<tr class="joinRooms red"ng-hide="filteredRooms.length">
