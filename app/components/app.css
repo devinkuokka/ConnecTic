@@ -279,8 +279,12 @@
   }
   
   tr.tictac td.tictac {
+      height: 170px;
+      width: 170px;
       border: 5px solid white;
       color: #FFFFFF;
+      vertical-align: middle;
+      font-size: 100px;
   }
   
   

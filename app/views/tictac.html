@@ -1,11 +1,14 @@
 <div class="pageLoad">
-	
-	<div class="well tictac inverse">
-		<table id="tictacTable" class="table tictac">			
-			<tr class="tictac" ng-repeat="x in [1,2,3]">
-				<td class="tictac" ng-repeat="y in [1,2,3]" ng-attr-id="{{x}}{{y}}" ng-click="tictacMove(x,y)"></td>
-			</tr>
-		</table>
+	<div class="col-xs-8">
+		<div class="well tictac inverse">
+			<table id="tictacTable" class="table tictac">			
+				<tr class="tictac" ng-repeat="x in [1,2,3]">
+					<td class="tictac" ng-repeat="y in [1,2,3]" ng-attr-id="{{x}}{{y}}" ng-click="tictacMove(x,y)"></td>
+				</tr>
+			</table>
+		</div>	
 	</div>
-		
+	<div class="col-xs-4 pull-right">
+		<button class="btn btn-default" ng-click="forfeit()" data-dismiss="modal">Forfeit Game</button>
+	</div>
 </div>

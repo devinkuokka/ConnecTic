@@ -127,10 +127,6 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
     roomId = data;
   });
   
-  $scope.leave = function(){
-  
-  };
-  
   $scope.sendMsg = function(msg) {
     socket.emit("msg_to_server", {playerId:playerId, playerName:playerName, msg:msg});
   }
@@ -203,7 +199,7 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
       $("#result").append("<h4>Congrats, you won!</h4>");
       $("#gameOverModal").modal("show");
 	} else {
-      $("#result").append("<h4>Sadface, you lost.</h4>");
+      $("#result").append('<h4>Sadface, you lost.</h4><button class="btn btn-default" ng-click="challenge()" data-dismiss="modal">Challenge to Rematch</button><button class="btn btn-default" ng-click="leave()" data-dismiss="modal">Leave Game</button>');
       $("#gameOverModal").modal("show");
     }
   });
@@ -212,6 +208,21 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
     $("#result").append("<h4>It's a Draw!</h4>");
     $("#gameOverModal").modal("show");
   });
+  
+  
+  
+  $scope.leave = function(){
+  
+  };
+  
+  $scope.challenge = function(){
+  
+  };
+  
+  
+  
+  
+  
   
 }]);
 
