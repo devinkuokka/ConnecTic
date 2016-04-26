@@ -1,6 +1,38 @@
 TO DO:
+- Players cannot join games that are in progress (i.e. have been filled)
+- List of only active games (when game ends because of win/lose/forfeit, no longer listed as option) (5 points)
+- Players can forfeit any game they enter (5 points)
+- All players can view leaders boards - current leaders, and all time leaders (10 points)
+- At end of game loser can ask for rematch, winner can then accept/decline (5 points)
+- Winner recieves points on leader board, forfeits are penalized (5 points)
+- All game play must abide by specified game's rules (15 points)
+
+	
+- Game communicates with all players about start, end, results, etc. of game (2 points)
+- Live feed with stats about all game play (4 points)
+	
+
+- Code is well formatted and easy to read, with proper commenting (2 points)
+
+
+Creative Portion (20 Points)
+
+
+
+
+TO FIX:
+
+- if refresh page direct to login
+- fix login so can't pass without entering
+- leave rooms --> ppl actually leaving
+- remove rooms with 2 ppl from list of rooms to join
+
+
+
+
+FIXED:
 
 - fix roomlist so that updated on everyone
 - ng-show showChat when enter a room
-- if refresh page direct to login
-- fix login so can't pass without entering
+
+

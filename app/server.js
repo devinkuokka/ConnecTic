@@ -58,11 +58,13 @@ io.on('connection', function (socket) {
 			{
 				'id': playerId,
 				'name': playerName,
-				'score': 0
+				'score': 0,
+				'roomId': "temp"
 			}
 		);
 		socket.emit("new_player_to_client", {playerId:playerId, playerName:playerName});
 		sockets[playerId] = socket;
+		socket.join("temp");
 	});
 	
 	socket.on("new_room_to_server", function(data) {
@@ -76,34 +78,105 @@ io.on('connection', function (socket) {
 				'p1Id': data.p1Id,
 				'p1Name': data.p1Name,
 				'p2Id': null,
-				'p2Name': null
+				'p2Name': null,
+				'canJoin': true
 		});
 		socket.emit("new_room_to_client", {roomId:roomId, gameId:gameId});
 		io.sockets.emit("request_rooms_to_client", rooms);
+		socket.leave("temp");
 		socket.join(roomId);
+		
+		for (var x in players) {
+			var player = players[x];
+			if (player.id == data.playerId) {
+				player.roomId = roomId;
+			};
+		};
+		
 	});
 	
 	socket.on("request_rooms_to_server", function() {
-		socket.emit("request_rooms_to_client", rooms);
+		//socket.emit("request_rooms_to_client", rooms);
+		io.sockets.emit("request_rooms_to_client", rooms);
 	});
 	
 	socket.on("join_room_to_server", function(data) {
+		socket.leave("temp");
 		socket.join(data.roomId);
 		for (var x in rooms) {
 			var room = rooms[x];
 			if (room.id == data.roomId) {
-				console.log("in if stmt");
 				room.p2Id = data.playerId;
 				room.p2Name = data.playerName;
+				room.canJoin = false;
 			}
 		};
-		console.log("here");
-		console.log(rooms);
-		socket.emit("join_room_to_client", rooms);
+		
+		for (var x in players) {
+			var player = players[x];
+			if (player.id == data.playerId) {
+				player.roomId = data.roomId;
+			};
+		};
+		
+		io.sockets.in(data.roomId).emit("join_room_to_client", data.roomId);
+		//socket.emit("request_rooms_to_client", rooms);
+		io.sockets.emit("request_rooms_to_client", rooms);
 	});
 	
+	socket.on('msg_to_server', function(data) {
+		for (var x in players) {
+			var player = players[x];
+			if (player.id == data.playerId) {
+				
+				if (player.roomId == "temp") {
+					io.sockets.in("temp").emit("msg_to_client", {playerName:data.playerName, msg:data.msg});
+				}
+				else {
+					io.sockets.in(player.roomId).emit("msg_to_client", {playerName:data.playerName, msg:data.msg});
+				}
+			}; 
+		};	
+	});
 	
+	socket.on('turn_to_server', function(data) {
+		for (var x in rooms) {
+			var room = rooms[x];
+			if (room.id == data.roomId) {
+				if (room.p1Id == data.playerId) {
+					io.to(room.p2Id).emit("turn_to_client", {cell:data.cellId, count:data.count});
+				}
+				else {
+					io.to(room.p1Id).emit("turn_to_client", {cell:data.cellId, count:data.count});
+				}
+			}; 
+		};	
+	});
 	
+	socket.on('game_over_to_server', function(data) {
+		for (var x in rooms) {
+			var room = rooms[x];
+			if (room.id == data.roomId) {
+				if (room.p1Id == data.playerId) {
+					io.to(room.p1Id).emit("game_over_to_client", {win:true});
+					io.to(room.p2Id).emit("game_over_to_client", {win:false});
+				}
+				else {
+					io.to(room.p1Id).emit("game_over_to_client", {win:false});
+					io.to(room.p2Id).emit("game_over_to_client", {win:true});
+				}
+			}; 
+		};	
+	});
+	
+	socket.on('tie_game_to_server', function(data) {
+		for (var x in rooms) {
+			var room = rooms[x];
+			if (room.id == data.roomId) {
+				io.to(room.id).emit("tie_game_to_client");
+			}; 
+		};	
+	});
 	
 	
 });

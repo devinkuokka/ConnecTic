@@ -23,7 +23,8 @@
     height: 50px;
     margin-bottom: 15px;
     padding-top: 0;
-    padding-bottom: 0; 
+    padding-bottom: 0;
+    border-radius: 0;
   }
   
   #page-content-wrapper {
@@ -51,6 +52,10 @@
   #loginModal {
     top: 30%;
   }
+  
+  #waitingModal {
+    top: 30%;
+  }
 
 
 
@@ -69,7 +74,7 @@
   }
   
   #sidebar-wrapper {
-      height: calc(100% - 65px);
+      height: calc(100% - 50px);
       z-index: 1000;
       position: fixed;
       top: 50px;
@@ -124,6 +129,7 @@
   #sidebar-main{
        height: calc(100% - 100px);
        overflow: scroll;
+       color: #FFFFFF;
   }
    
   #sidebar-footer{
@@ -131,9 +137,10 @@
        padding: inherit;
   }
    
-  #message_input {
-    width: 100%;
+  #mesgInput {
+    width: 80%;
     border-radius: 2px;
+    color: #000000;
   }
   
 
@@ -273,6 +280,7 @@
   
   tr.tictac td.tictac {
       border: 5px solid white;
+      color: #FFFFFF;
   }
   
   
