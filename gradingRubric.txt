@@ -1,6 +1,6 @@
 
 Multi-Game Server using Angular.js, Node.js, Socket.io (60 Points):
-	Players can create a username and choose which game they want to play (5 points)
+	Players must create a username to start playing (5 points)
 	Players can create a new game or join an arbitrary game (5 points)
 	Players cannot join games that are in progress (i.e. have been filled) (5 points)
 	Players can forfeit any game they enter (5 points)
