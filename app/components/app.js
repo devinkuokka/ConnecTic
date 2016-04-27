@@ -49,14 +49,17 @@ myApp.config(['$routeProvider', function($routeProvider) {
 
 myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
 
+  //establish socket io connection
   var socket = io.connect();
 
+  //make individuals enter a username before joining
   $(window).load(function(){
     if (playerId == "") {
       $('#loginModal').modal('show');
 	};  
   });
   
+  //after someone submits a username, add them to the players list on the server and redirect them to home page
   $scope.newPlayer = function(username) {
     socket.emit("new_player_to_server", username);
     playerName = username;
@@ -64,10 +67,11 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   };
   
   socket.on("new_player_to_client", function(data) {
-    playerId = data.playerId;
+    playerId = data.playerId; // log unique player id established on server side
     playerName = data.playerName;
   });
   
+  //gameId's of all games, and images that appear on the home screen
   $scope.games = [
     {'id': 'tictac',
       'name': 'Tic-Tac-Toe',
@@ -83,12 +87,17 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
     }
   ];
   
+  //get the gameId from the url
   $scope.gameId = $routeParams.gameId;
   
+  //add a new room
   $scope.newRoom = function(roomname) {
     socket.emit("new_room_to_server", {name:roomname, gameId: $scope.gameId, p1Id:playerId, p1Name:playerName});
   };
   
+  //update clients room information, bring them into the room
+  //show them a "waiting" modal until someone else joins room
+  //individual has the option to leave room is no one joins soon enough
   socket.on("new_room_to_client", function(data) {
     gameId = data.gameId
     roomId = data.roomId;
@@ -96,23 +105,29 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
     $("#waitingModal").modal("show");
   });
   
+  //asks for availble rooms for specific gameId
   $scope.requestRooms = function() {
     socket.emit("request_rooms_to_server");
   };
   
+  //update available rooms for specific gameId
   socket.on("request_rooms_to_client", function(data) {
     roomArray = data;
   });
   
+  //set updated rooms array
   $scope.rooms = roomArray;
   
+  //creates an array from the indicated min and max value -- step is optional
   $scope.range = function(min, max, step) {
     step = step || 1;
     var input = [];
+    // generates an array with increasing values
     if (min < max) { 	 	 	
 	  for (var i = min; i <= max; i += step) {
 		  input.push(i);
 	  };
+    // generates an array with decreaseing values (used for detecting connect 4 diagonal win)
 	} else {
 	  for (var i = min; i >= max; i -= step) {
 		  input.push(i);
@@ -123,38 +138,44 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   
   $scope.xvalues = ["","A","B","C","D","E","F","G","H","I","J"];
   
+  //lets someone join room.  If you join a room, you are second player and therefore you go second (p1 is initated as true)
   $scope.joinRoom = function(data) {
     socket.emit("join_room_to_server", {playerId:playerId, playerName:playerName, roomId:data});	
     isP1 = false;
     isTurn = false;
   };
   
+  //once someone joins the room, the game can begin
   socket.on("join_room_to_client", function(data) {
     $("#waitingModal").modal("hide");
     roomId = data.roomId;
 	gameId = data.gameId;
   });
   
+  //sends messages to either opponent or all players not in a game
   $scope.sendMsg = function(msg) {
     socket.emit("msg_to_server", {playerId:playerId, playerName:playerName, msg:msg});
   }
   
+  //updates message in chatlog
   socket.on("msg_to_client", function(data) {
     $("#chatlog").prepend("<hr>" + data.playerName + ": " + data.msg + "</hr>");
   });
   
+  //
   $scope.move = function(row, col){
-    
+    // for tic tac toe
     if (gameId == "tictac") { 	 	 	
-	  var cell = ("#" + row + "" + col);
-	  if (isTurn) {
-		if ($(cell).html() == "") {	
-		  count++;
+	  var cell = ("#" + row + "" + col); // get cell id of selected spot
+	  if (isTurn) { 
+		if ($(cell).html() == "") {	//can only click on empty cells--cannot override opponents previous move
+		  count++; // increase the count of the game
 		  socket.emit("turn_to_server", {playerId:playerId, roomId:roomId, cellId:cell, count:count});
 		  isTurn = false;
+          //adds move to current players side--faster than waiting for server to reemit
 		  if (isP1) {
-			$(cell).html("X");
-			$(cell).val(1);
+			$(cell).html("X"); //display to users
+			$(cell).val(1); // tracking which player went where to determine who won
 		  } else {
 			$(cell).html("O");
 			$(cell).val(2);
@@ -162,6 +183,7 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
 		};
 	  };
 	  
+      //Checking who won.  Values of each table id concatinated, not added, so made a string
 	  var checkVal = "";
 	  if (isP1) {
 		checkVal = '111';
@@ -194,37 +216,43 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
 	  };
 	}; //close tictac
 	
+    //open connect4
 	if (gameId == "connect4") { 	 	 	
-	  var rowId = ("#" + row);
+	  var rowId = ("#" + row); // downward arrows that player clicks to drop a piece in that row
 	  if (isTurn) {
-		if ($(rowId).attr("value") == "0") {
+		if ($(rowId).attr("value") == "0") { // if the row is not full
 		  count++;
 		  isTurn = false;
 		  var cells = [];
 		  var cellId = "";
+          //sets cellId for the cells in the selected row
 		  for (var i = 6; i > 0; i--){
 			cells.push("#" + i + row);
 		  }
 		  
 		  for (var x in cells) {
 			cellId = cells[x]
+            //if the value of the current cell is 0, can play a piece there
 			if ($(cellId).attr("value") == "0") {
 			  socket.emit("turn_to_server", {playerId:playerId, roomId:roomId, cellId:cellId, count:count});
 			  if (isP1) {
+                //must reset value so that opponnet cannot play there
 				$(cellId).html('<img src="photos/red-circle.png" height=55; width=55;>');
-				$(cellId).attr("value", "1");
+				$(cellId).attr("value", "1"); 
 			  } else {
 				$(cellId).html('<img src="photos/yellow-circle.png" height=55; width=55;>');
 				$(cellId).attr("value", "2");
 			  };
-			  break;
-			} else {
+			  break; //want to break because once we find an available spot, we do not need to look anymore
+			//determines if the row is full
+            } else {
 			  $(rowId).attr("value") == "3"
 			};
 		  };
 		};
 	  };
 	  
+      //set winning sequence for each player
 	  var checkVal = "";
 	  if (isP1) {
 		checkVal = '1111';
@@ -243,8 +271,8 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
 		  cell = "#" + rows[y] + cols[x];
 		  str = str + $(cell).attr("value");
 		};
-		var isWin = str.search(checkVal);
-		if (isWin != -1) {
+		var isWin = str.search(checkVal); //returns index of where value was found, -1 otherwise
+		if (isWin != -1) { 
 		  socket.emit("game_over_to_server", {playerId:playerId, roomId:roomId}); 
 		};
 	  };
@@ -291,6 +319,7 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
 	
   };
 
+  //by entering in the beginning and end of possible winning diagonals, can check to see if winning sequence appears
   var checkDiagonal = function(rmin, cmin, rmax, cmax) {
 	var checkVal = "";
 	if (isP1) {
@@ -299,6 +328,7 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
 	  checkVal = '2222';
 	};
 
+    //sets the array for each diagonal
 	var str = "";
 	var rows = $scope.range(rmin, rmax);
 	var cols = $scope.range(cmin, cmax);
@@ -317,7 +347,8 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   socket.on("turn_to_client", function(data) {
     count = data.count;
     isTurn = true;
-		  
+	
+    //updates players choice on opponents board
 	if (gameId == "tictac") {
 	  if (isP1) {
 		$(data.cellId).html("O");
@@ -338,6 +369,7 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
 	
   });
   
+  //diplay win or lose modal, lose modal has option for rematch, both modals can leave
   socket.on("game_over_to_client", function(data) {
     if (data.win) {
       $("#winModal").modal("show");
@@ -346,31 +378,28 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
     }
   });
   
+  //display tie modal, both can challenge to rematch or leave room
   socket.on("tie_game_to_client", function() {
     $("#tieModal").modal("show");
   });
   
-  $scope.leave = function(){
-	socket.emit("leave_to_server",  roomId); 
-  };
-  
+  //if loser/ one of draw players requests a rematch
   $scope.rematch = function() {
 	socket.emit("rematch_to_server", {playerId:playerId, roomId:roomId});
   };
   
+  //hides win modal and asks the winner if they accept the rematch
   socket.on("rematch_to_client", function() {
     $("#winModal").modal("hide");
 	$("#rematchModal").modal("show");
   });
   
+  //send if winner accepts rematch
   $scope.accept = function(){
 	socket.emit("accept_to_server", roomId); 
   };
   
-  $scope.decline = function(){
-	socket.emit("leave_to_server", roomId); 
-  };
-  
+  //if server accpets rematch, reset the game by setting values of table cells 0 and removing the respective pieces
   socket.on("accept_to_client", function() {
 	count = 0;
 	if (gameId == "tictac") {
@@ -399,23 +428,38 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
 	$(".gameOverModal").modal("hide");
   });
   
+  //if winner does not accpet rematch both players leave room
+  $scope.decline = function(){
+	socket.emit("leave_to_server", roomId); 
+  };
+  
+  //if leave clicked with waiting for opponent or after game
+  $scope.leave = function(){
+	socket.emit("leave_to_server",  roomId); 
+  };
+  
+  //when leave, server resets player's room to temp, returns them to the home page, and removes the room
   socket.on("leave_to_client", function() {
 	$(".gameOverModal").modal("hide");
 	window.location = "#/home";
   });
   
+  //if a player forfeits in the middle of the game, penalize them
   $scope.forfeit = function(){
 	socket.emit("forfeit_to_server", {playerId:playerId, roomId:roomId}); 
   };
   
+  //when someone foreits, leave room occurs so call leave room
   socket.on("forfeit_to_client", function() {
 	socket.emit("leave_to_server", roomId); 
   });
   
+  //update live updates in navabar
   socket.on("live_update_to_client", function(data) {
 	$("#liveUpdate").html(data); 
   });
   
+  //update all-time (of server instace) and current leaders
   $scope.leaders = function() {
 	socket.emit("leaders_to_server");
   };
@@ -427,6 +471,7 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   
   $scope.leadersArray = leaders;
   
+  //when a player disconnects via leaving the entire site or refreashing...
   socket.on("disonnect_to_client", function() {
 	$(".gameOverModal").modal("hide");
 	window.location = "#/home";

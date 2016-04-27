@@ -3,6 +3,7 @@
 		<div class="well tictac inverse">
 			<table id="tictacTable" class="table tictac">			
 				<tr class="tictac" ng-repeat="x in [1,2,3]">
+					<!-- sets cell id for each cell in the table-->
 					<td class="tictac" ng-repeat="y in [1,2,3]" ng-attr-id="{{x}}{{y}}" ng-click="move(x,y)"></td>
 				</tr>
 			</table>

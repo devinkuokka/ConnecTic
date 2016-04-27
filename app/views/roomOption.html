@@ -23,7 +23,7 @@
 			
 			<div ng-show="showJoin">
 				<table class="table joinRooms">
-
+					<!--filters rooms by canJoin attribute and by gameId-->
 					<tr class="joinRooms" ng-repeat="room in filteredRooms = (rooms | filter:gameId | filter:{canJoin:true})">
 						<td class="joinRooms"><a href="#/{{gameId}}/:{{room.id}}" ng-click="joinRoom(room.id);">{{room.name}}</a></td>
 						<td class="joinRooms"><i>against {{room.p1Name}}</i></td>

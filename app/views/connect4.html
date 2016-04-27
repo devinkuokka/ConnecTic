@@ -3,12 +3,14 @@
 	<div class="well connect4 inverse">
 		<table class="connect4">
 			<tr class="connect4">
+				<!-- buttons on top are active and determine move-->
 				<td class="connect4 top" value="0" ng-repeat="z in range(1,7)" ng-attr-id="{{z}}" ng-click="move(z,0)">
 					<span class="glyphicon glyphicon-triangle-bottom"></span>
 				</td>
 			</tr>
 			</tr>
 			<tr class="connect4" ng-repeat="x in range(1,6)">
+				<!--sets the id of each cell in the table so that can updae image-->
 				<td class="connect4" value="0" ng-repeat="y in range(1,7)" ng-attr-id="{{x}}{{y}}">
 					<img src="photos/black-circle.png" height=55; width=55;>
 				</td>
