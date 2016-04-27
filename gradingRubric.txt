@@ -4,7 +4,7 @@ Multi-Game Server using Angular.js, Node.js, Socket.io (60 Points):
 	Players can create a new game or join an arbitrary game (5 points)
 	Players cannot join games that are in progress (i.e. have been filled) (5 points)
 	Players can forfeit any game they enter (5 points)
-	All players can view leaders boards - current leaders, and all time leaders (10 points)
+	All players can view leaders board (10 points)
 	At end of game loser can ask for rematch, winner can then accept/decline (5 points)
 	Winner recieves points on leader board, forfeits are penalized (5 points)
 	All game play must abide by specified game's rules (15 points)

@@ -38,10 +38,6 @@ myApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'views/connect4.html',
       controller: 'homeCtrl'
     }).
-    when('/battleship/:roomId', {
-      templateUrl: 'views/battleship.html',
-      controller: 'homeCtrl'
-    }).
     otherwise({
       redirectTo: '/home'
     });
@@ -62,9 +58,12 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   
   //after someone submits a username, add them to the players list on the server and redirect them to home page
   $scope.newPlayer = function(username) {
-    socket.emit("new_player_to_server", username);
-    playerName = username;
-    window.location = "#/home";
+    if (username != null) {
+	  socket.emit("new_player_to_server", username);
+	  playerName = username;
+	  $("#loginModal").modal("hide");
+	  window.location = "#/home";
+	}
   };
   
   socket.on("new_player_to_client", function(data) {
@@ -82,10 +81,6 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
       'name': 'Connect 4',
       'img': 'connect4.png'
     },
-    {'id': 'battleship',
-      'name': 'Battleship',
-      'img': 'battleship.png'
-    }
   ];
   
   //get the gameId from the url
@@ -93,8 +88,13 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   
   //add a new room
   $scope.newRoom = function(roomname) {
-    isP1 = true;
-    socket.emit("new_room_to_server", {name:roomname, gameId: $scope.gameId, p1Id:playerId, p1Name:playerName});
+    if (roomname != null) {
+	  //reset each element for the new game
+	  isP1 = true;
+	  isTurn = true;
+	  count = 0;
+	  socket.emit("new_room_to_server", {name:roomname, gameId: $scope.gameId, p1Id:playerId, p1Name:playerName});
+	}
   };
   
   //update clients room information, bring them into the room
@@ -468,7 +468,6 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   
   socket.on("leaders_to_client", function(data) {
 	leaders = data;
-	console.log(data);
   });
   
   $scope.leadersArray = leaders;
