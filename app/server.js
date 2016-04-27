@@ -230,4 +230,39 @@ io.on('connection', function (socket) {
 		io.sockets.in("temp").emit("leaders_to_client", players);
 	});
 	
+	socket.on('disconnect', function() {
+		var deletedId = 0;
+		for (var x in players) {
+			var player = players[x];
+			if (player.id == socket.id) {
+				deletedId = player.id;
+                player.active == false;
+				sockets[player.id].leave(player.roomId);
+			};
+		};
+		for (var x in rooms){
+			var room = rooms[x];
+			if (deletedId == room.p1Id) {
+				for (var y in players) {
+					var player = players[y];
+					if (player.id == room.p2Id) {
+						player.roomId = 'temp';
+						sockets[player.id].leave(room.id);
+						io.to(player.id).emit("disonnect_to_client");
+                    };
+				};					
+            } else if (deletedId == room.p2Id){
+				for (var y in players) {
+					var player = players[y];
+					if (player.id == room.p1Id) {
+						player.roomId = 'temp';
+						sockets[player.id].leave(room.id);
+						io.to(player.id).emit("disonnect_to_client");
+                    };
+				};
+			};
+		};
+		delete sockets[deletedId];
+		console.log(players);
+	});
 });

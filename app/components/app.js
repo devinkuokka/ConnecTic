@@ -427,6 +427,11 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   
   $scope.leadersArray = leaders;
   
+  socket.on("disonnect_to_client", function() {
+	$(".gameOverModal").modal("hide");
+	window.location = "#/home";
+  });
+  
 }]);
 
 
