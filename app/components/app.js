@@ -93,6 +93,7 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   
   //add a new room
   $scope.newRoom = function(roomname) {
+    //reset each element for the new game
     isP1 = true;
     isTurn = true;
     count = 0;
