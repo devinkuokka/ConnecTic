@@ -95,11 +95,6 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
 	  count = 0;
 	  socket.emit("new_room_to_server", {name:roomname, gameId: $scope.gameId, p1Id:playerId, p1Name:playerName});
 	}
-    //reset each element for the new game
-    isP1 = true;
-    isTurn = true;
-    count = 0;
-    socket.emit("new_room_to_server", {name:roomname, gameId: $scope.gameId, p1Id:playerId, p1Name:playerName});
   };
   
   //update clients room information, bring them into the room
