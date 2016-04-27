@@ -31,7 +31,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
       controller: 'homeCtrl'
     }).
     when('/tictac/:roomId', {
-      templateUrl: 'views/ticTac.html',
+      templateUrl: 'views/tictac.html',
       controller: 'homeCtrl'
     }).
     when('/connect4/:roomId', {
