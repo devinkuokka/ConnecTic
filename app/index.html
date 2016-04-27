@@ -36,10 +36,8 @@
                 </a>
               </li>
               
-              <li class="nav"><a href="#/leadersboard">Leader's Boards</a></li>
-              <li class="nav"><a href="#">Link</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
+              <li class="nav"><a href="#/leadersboard" ng-controller="homeCtrl" ng-click="leaders()">Leader's Boards</a></li>
+              
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -49,6 +47,11 @@
                   <li><a href="#">Separated link</a></li>
                 </ul>
               </li>
+              
+            </ul>
+            
+            <ul class="nav navbar-nav navbar-right" style="width: 300px;">
+              <div id="liveUpdate"></div>
             </ul>
   
         </div>
@@ -140,22 +143,98 @@
   </div>
   <!-- /waitingModal -->
   
-  <!-- gameOverModal -->
-  <div id="gameOverModal" class="modal fade" data-backdrop="static" data-keyboard="false" ng-controller="homeCtrl">
+  <!-- winModal -->
+  <div id="winModal" class="modal fade gameOverModal" data-backdrop="static" data-keyboard="false" ng-controller="homeCtrl">
 	<div class="modal-dialog">
       <!-- modal content-->
       <div class="modal-content">
         <div class="modal-body">
           <form class="form-horizontal">
             <div class="form-group">
-              <div class="col-xs-8" id="result"></div>
+              <div class="col-xs-8">
+                <h4>Congrats, you won!</h4>
+              </div>
+              <div class="col-xs-4">
+                <button class="btn btn-default" ng-click="leave()" data-dismiss="modal">Leave Game</button>
+              </div>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
-  <!-- /gameOverModal -->
+  <!-- /winModal -->
+  
+  <!-- loseModal -->
+  <div id="loseModal" class="modal fade gameOverModal" data-backdrop="static" data-keyboard="false" ng-controller="homeCtrl">
+	<div class="modal-dialog">
+      <!-- modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <div class="col-xs-8">
+                <h4>Sadface, you lost.</h4>
+              </div>
+              <div class="col-xs-4">
+                <button class="btn btn-default" ng-click="rematch()" data-dismiss="modal">Challenge to Rematch</button>
+                <button class="btn btn-default" ng-click="leave()" data-dismiss="modal">Leave Game</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /loseModal -->
+  
+  <!-- tieModal -->
+  <div id="tieModal" class="modal fade gameOverModal" data-backdrop="static" data-keyboard="false" ng-controller="homeCtrl">
+	<div class="modal-dialog">
+      <!-- modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <div class="col-xs-6">
+                <h4>Cat's Game!</h4>
+              </div>
+              <div class="col-xs-6">
+                <button class="btn btn-default" ng-click="rematch()" data-dismiss="modal">Challenge to Rematch</button>
+                <button class="btn btn-default" ng-click="leave()" data-dismiss="modal">Leave Game</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /tieModal -->
+  
+  <!-- rematchModal -->
+  <div id="rematchModal" class="modal fade gameOverModal" data-backdrop="static" data-keyboard="false" ng-controller="homeCtrl">
+	<div class="modal-dialog">
+      <!-- modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <div class="col-xs-8">
+                <h4>Opponent challenged you to a rematch!</h4>
+              </div>
+              <div class="col-xs-4">
+                <button class='btn btn-default' ng-click='accept()' data-dismiss='modal'>Accept</button>
+                <button class='btn btn-default' ng-click='leave()' data-dismiss='modal'>Decline</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /rematchModal -->
+  
+  
   
 
 </html>

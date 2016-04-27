@@ -28,27 +28,6 @@ app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/index.html')
 });
 
-// Players = [
-//	{	id:
-//		name:
-//		score:
-//		gameId:
-//		roomId:
-//	},
-//];
-
-// Rooms = [
-//	{	id:
-//		name:
-//		gameId:
-//		board:
-//		player1:
-//		player2:
-//	},
-//];
-
-
-
 
 io.on('connection', function (socket) {
 	socket.on("new_player_to_server", function(data){
@@ -59,7 +38,8 @@ io.on('connection', function (socket) {
 				'id': playerId,
 				'name': playerName,
 				'score': 0,
-				'roomId': "temp"
+				'roomId': "temp",
+				'active': true
 			}
 		);
 		socket.emit("new_player_to_client", {playerId:playerId, playerName:playerName});
@@ -74,7 +54,6 @@ io.on('connection', function (socket) {
 				'id': roomId,
 				'name': data.name,
 				'gameId': gameId,
-				'board': null,
 				'p1Id': data.p1Id,
 				'p1Name': data.p1Name,
 				'p2Id': null,
@@ -96,11 +75,11 @@ io.on('connection', function (socket) {
 	});
 	
 	socket.on("request_rooms_to_server", function() {
-		//socket.emit("request_rooms_to_client", rooms);
 		io.sockets.emit("request_rooms_to_client", rooms);
 	});
 	
 	socket.on("join_room_to_server", function(data) {
+		var gameId = "";
 		socket.leave("temp");
 		socket.join(data.roomId);
 		for (var x in rooms) {
@@ -109,6 +88,7 @@ io.on('connection', function (socket) {
 				room.p2Id = data.playerId;
 				room.p2Name = data.playerName;
 				room.canJoin = false;
+				gameId = room.gameId;
 			}
 		};
 		
@@ -119,8 +99,7 @@ io.on('connection', function (socket) {
 			};
 		};
 		
-		io.sockets.in(data.roomId).emit("join_room_to_client", data.roomId);
-		//socket.emit("request_rooms_to_client", rooms);
+		io.sockets.in(data.roomId).emit("join_room_to_client", {roomId:data.roomId, gameId:gameId});
 		io.sockets.emit("request_rooms_to_client", rooms);
 	});
 	
@@ -144,10 +123,10 @@ io.on('connection', function (socket) {
 			var room = rooms[x];
 			if (room.id == data.roomId) {
 				if (room.p1Id == data.playerId) {
-					io.to(room.p2Id).emit("turn_to_client", {cell:data.cellId, count:data.count});
+					io.to(room.p2Id).emit("turn_to_client", {cellId:data.cellId, count:data.count});
 				}
 				else {
-					io.to(room.p1Id).emit("turn_to_client", {cell:data.cellId, count:data.count});
+					io.to(room.p1Id).emit("turn_to_client", {cellId:data.cellId, count:data.count});
 				}
 			}; 
 		};	
@@ -160,10 +139,27 @@ io.on('connection', function (socket) {
 				if (room.p1Id == data.playerId) {
 					io.to(room.p1Id).emit("game_over_to_client", {win:true});
 					io.to(room.p2Id).emit("game_over_to_client", {win:false});
+					var msg = room.p1Name + " beat " + room.p2Name;
+					io.sockets.emit("live_update_to_client", msg);
+					for (var y in players) {
+						var player = players[y];
+						if (player.id == room.plId) {
+							player.score = player.score + 10;
+							console.log(player.score);
+						}; 
+					};	
 				}
 				else {
 					io.to(room.p1Id).emit("game_over_to_client", {win:false});
 					io.to(room.p2Id).emit("game_over_to_client", {win:true});
+					var msg = room.p2Name + " beat " + room.p1Name;
+					io.sockets.emit("live_update_to_client", msg);
+					for (var y in players) {
+						var player = players[y];
+						if (player.id == room.p2Id) {
+							player.score = player.score + 10;
+						}; 
+					};	
 				}
 			}; 
 		};	
@@ -174,9 +170,65 @@ io.on('connection', function (socket) {
 			var room = rooms[x];
 			if (room.id == data.roomId) {
 				io.to(room.id).emit("tie_game_to_client");
+				var msg = room.p2Name + " tied " + room.p1Name;
+				io.sockets.emit("live_update_to_client", msg);
 			}; 
 		};	
 	});
 	
+	socket.on('rematch_to_server', function(data) {
+		for (var x in rooms) {
+			var room = rooms[x];
+			if (room.id == data.roomId) {
+				if (room.p1Id == data.playerId) {
+					io.to(room.p2Id).emit("rematch_to_client");
+				} else {
+					io.to(room.p1Id).emit("rematch_to_client");
+				}
+			}; 
+		};	
+	});
+	
+	socket.on('accept_to_server', function(data) {
+		for (var x in rooms) {
+			var room = rooms[x];
+			if (room.id == data) {
+				io.to(room.id).emit("accept_to_client");
+			}; 
+		};	
+	});
+	
+	socket.on('forfeit_to_server', function(data) {
+		for (var x in players) {
+			var player = players[x];
+			if (player.id == data.playerId) {
+				player.score = player.score - 10;
+				io.to(player.id).emit("forfeit_to_client");
+				var msg = player.name + " forfeited";
+				io.sockets.emit("live_update_to_client", msg);
+			}; 
+		};	
+	});
+	
+	socket.on('leave_to_server', function(data) {
+		for (var x in rooms) {
+			var room = rooms[x];
+			if (room.id == data) {
+				for (var y in players) {
+					var player = players[y];
+					if (player.id == room.p1Id || player.id == room.p2Id) {
+						player.roomId = 'temp';
+						io.to(player.id).emit("leave_to_client");
+						sockets[player.id].leave(room.id);
+					};
+				};
+				rooms.splice(x, 1);
+			};
+		};	
+	});
+	
+	socket.on('leaders_to_server', function() {
+		io.sockets.in("temp").emit("leaders_to_client", players);
+	});
 	
 });

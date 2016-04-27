@@ -2,12 +2,22 @@
 	
 	<div class="well connect4 inverse">
 		<table class="connect4">
-			
-			<tr class="connect4" ng-repeat="i in range(1,6)">
-				<td class="connect4" ng-repeat="j in range(1,7)"><img src="photos/black-circle.png" height=55; width=55;></td>
+			<tr class="connect4">
+				<td class="connect4 top" value="0" ng-repeat="z in range(1,7)" ng-attr-id="{{z}}" ng-click="move(z,0)">
+					<span class="glyphicon glyphicon-triangle-bottom"></span>
+				</td>
+			</tr>
+			</tr>
+			<tr class="connect4" ng-repeat="x in range(1,6)">
+				<td class="connect4" value="0" ng-repeat="y in range(1,7)" ng-attr-id="{{x}}{{y}}">
+					<img src="photos/black-circle.png" height=55; width=55;>
+				</td>
 			</tr>
 
 		</table>
 	</div>
-		
+	
+	<div class="col-xs-4 pull-right">
+		<button class="btn btn-default" ng-click="forfeit()" data-dismiss="modal">Forfeit Game</button>
+	</div>	
 </div>

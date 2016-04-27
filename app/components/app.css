@@ -49,12 +49,15 @@
     margin-bottom: 20px;
   }
   
-  #loginModal {
+  .modal {
     top: 30%;
   }
   
-  #waitingModal {
-    top: 30%;
+  #liveUpdate {
+    color: #FCE700;
+    text-align: right;
+    padding: 15px;
+    font-style: italic;
   }
 
 
@@ -122,19 +125,21 @@
   }
   
   #sidebar-header{
-      padding: inherit;
-      height: 50px;
+    padding: inherit;
+    height: 50px;
+    font-size: 15px;
+    font-weight: bold;
   }
    
   #sidebar-main{
-       height: calc(100% - 100px);
-       overflow: scroll;
-       color: #FFFFFF;
+    height: calc(100% - 100px);
+    overflow-y: scroll;
+    color: #FFFFFF;
   }
    
   #sidebar-footer{
-       height: 50px;
-       padding: inherit;
+    height: 50px;
+    padding: inherit;
   }
    
   #mesgInput {
@@ -305,27 +310,7 @@
     text-align: center;
   }
   
-
-/* Battleship Page Styles */
-  .well.battleship {
-    height: 100%;
-    width: 100%;
-    border-radius: 15px;
+  .connect4.top {
+    background-color: #222222; 
   }
   
-  .battleship.board {
-    height: 100%;
-  }
-  
-  table.battleship {
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    border-collapse: collapse;
-    color: #FFFFFF;
-  }
-  
-  tr.battleship td.battleship {
-    border: 1px solid white;
-    width: calc(100% / 11);
-  }
