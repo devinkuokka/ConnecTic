@@ -15,6 +15,7 @@ var myApp = angular.module('myApp', [
   'ngRoute'
 ]);
 
+//redircts to correct pages
 myApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
     when('/home', {
@@ -92,6 +93,7 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   
   //add a new room
   $scope.newRoom = function(roomname) {
+    isP1 = true;
     socket.emit("new_room_to_server", {name:roomname, gameId: $scope.gameId, p1Id:playerId, p1Name:playerName});
   };
   
@@ -472,10 +474,10 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   $scope.leadersArray = leaders;
   
   //when a player disconnects via leaving the entire site or refreashing...
-  socket.on("disonnect_to_client", function() {
-	$(".gameOverModal").modal("hide");
-	window.location = "#/home";
-  });
+//  socket.on("disonnect_to_client", function() {
+//	$(".gameOverModal").modal("hide");
+//	window.location = "#/home";
+//  });
   
 }]);
 
