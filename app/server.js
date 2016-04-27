@@ -143,9 +143,8 @@ io.on('connection', function (socket) {
 					io.sockets.emit("live_update_to_client", msg);
 					for (var y in players) {
 						var player = players[y];
-						if (player.id == room.plId) {
+						if (player.id == room.p1Id) {
 							player.score = player.score + 10;
-							console.log(player.score);
 						}; 
 					};	
 				}

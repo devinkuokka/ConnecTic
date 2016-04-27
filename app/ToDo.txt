@@ -1,5 +1,5 @@
 TO DO:
-- All players can view leaders boards - current leaders, and all time leaders (10 points)
+- current leaders (10 points)
 - Code is well formatted and easy to read, with proper commenting (2 points)
 
 
@@ -9,7 +9,7 @@ TO FIX:
 
 - if refresh page direct to login
 - fix login so can't pass without entering
--disconnection (because of refresh) causes opponent to leave room
+- disconnection (because of refresh) causes opponent to leave room
 
 
 

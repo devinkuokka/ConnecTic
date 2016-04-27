@@ -6,7 +6,7 @@
 			
 			<table class="table leaders">
 				
-				<tr class="leaders" ng-repeat="player in leadersArray | orderBy:-player.score | limitTo:5">
+				<tr class="leaders" ng-repeat="player in leadersArray | orderBy:'-score' | limitTo:5">
 					<td class="leaders">{{$index + 1}}</td>
 					<td class="leaders">{{player.name}}</td>
 					<td class="leaders">{{player.score}}</td>
@@ -22,7 +22,7 @@
 			
 			<table class="table leaders">
 				
-				<tr class="leaders" ng-repeat="player in leadersArray | filter:{active:true} | orderBy:-player.score | limitTo:5">
+				<tr class="leaders" ng-repeat="player in leadersArray | filter:{active:true} | orderBy:'-score' | limitTo:5">
 					<td class="leaders">{{$index + 1}}</td>
 					<td class="leaders">{{player.name}}</td>
 					<td class="leaders">{{player.score}}</td>
