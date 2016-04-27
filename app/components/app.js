@@ -141,7 +141,8 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
     
     if (isTurn) {
       socket.emit("turn_to_server", {playerId:playerId, roomId:roomId, cellId:cell, count:count});
-      isTurn = false;
+      console.log(count);
+	  isTurn = false;
       if (isP1) {
         $(cell).append("X");
         $(cell).val(1);
@@ -182,41 +183,40 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
       socket.emit("tie_game_to_server", {playerId:playerId, roomId:roomId});
     };
     
+	
   };
 
   socket.on("turn_to_client", function(data) {
     count = data.count;
     isTurn = true;
     if (isP1) {
-      $(data.cell).append("O");
+      $(data.cell).html("O");
     } else {
-      $(data.cell).append("X");
+      $(data.cell).html("X");
     };
   });
   
   socket.on("game_over_to_client", function(data) {
     if (data.win) {
-      $("#result").append("<h4>Congrats, you won!</h4>");
+      $("#result").html("<h4>Congrats, you won!</h4>");
       $("#gameOverModal").modal("show");
 	} else {
-      $("#result").append('<h4>Sadface, you lost.</h4><button class="btn btn-default" ng-click="challenge()" data-dismiss="modal">Challenge to Rematch</button><button class="btn btn-default" ng-click="leave()" data-dismiss="modal">Leave Game</button>');
+      $("#result").html('<h4>Sadface, you lost.</h4><button class="btn btn-default" ng-click="challenge()" data-dismiss="modal">Challenge to Rematch</button><button class="btn btn-default" ng-click="leave()" data-dismiss="modal">Leave Game</button>');
       $("#gameOverModal").modal("show");
     }
   });
   
-  socket.on("tie_game_to_client", function(data) {
-    $("#result").append("<h4>It's a Draw!</h4>");
-    $("#gameOverModal").modal("show");
+  socket.on("tie_game_to_client", function() {
+    $("#result").html("<h4>Cat's game!</h4><button class='btn btn-default' ng-click='challenge()' data-dismiss='modal'>Challenge to Rematch</button>");
+    $("#gameOverModal").html("show");
   });
   
-  
-  
   $scope.leave = function(){
-  
+	
   };
   
   $scope.challenge = function(){
-  
+	
   };
   
   

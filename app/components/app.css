@@ -276,6 +276,7 @@
     text-align: center;
     border-collapse: collapse;
     border-style: hidden;
+    margin-bottom: 0;
   }
   
   tr.tictac td.tictac {
