@@ -175,6 +175,10 @@
     display: block;
     margin: 0 auto;
   }
+  
+  .gameImg {
+    max-width: 350px;
+  }
 
 
 
