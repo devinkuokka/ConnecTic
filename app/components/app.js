@@ -94,6 +94,8 @@ myApp.controller('homeCtrl', ['$scope', '$routeParams', function($scope, $routeP
   //add a new room
   $scope.newRoom = function(roomname) {
     isP1 = true;
+    isTurn = true;
+    count = 0;
     socket.emit("new_room_to_server", {name:roomname, gameId: $scope.gameId, p1Id:playerId, p1Name:playerName});
   };
   
